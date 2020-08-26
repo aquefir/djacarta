@@ -1,46 +1,50 @@
 /* -*- coding: utf-8 -*- */
+/****************************************************************************\
+ *                                 DjaCarta                                 *
+ *                                                                          *
+ *                      Copyright © 2019-2020 Aquefir                       *
+ *                       Released under BSD-2-Clause.                       *
+\****************************************************************************/
 
-#include <curses.h>
+#include <locale.h>
+#include <termbox.h>
 #include <uni/types/int.h>
+
+typedef u16 vwinid_t;
+
+struct win
+{
+	s32 x, y, z;
+	u32 w, h;
+	unsigned bgcol : 8;
+	unsigned fgcol : 8;
+	unsigned visible : 1;
+	unsigned bordered : 1;
+	unsigned titled : 1;
+	unsigned closable : 1;
+	const char* title;
+	u8* content;
+};
 
 struct state
 {
-	WINDOW* win;
-	int key;
-	struct uni_str** buf;
-	ptri buf_sz;
-	const char* opfile;
-	struct uni_str* cmdbuf;
-	unsigned cmdmode : 1;
-	unsigned tabsz : 7;
-	u32 win_w, win_h;
-	u32 bufcur_x, bufcur_y;
-	u32 bufofs_x, bufofs_y;
+	u32 term_w, term_h;
 };
 
-void curses_init( void )
+void ui_init( void )
 {
-	setlocale( LC_ALL, "en_US.UTF-8" );
-
-	init_pair( 1, 231, 16 );
-	initscr( );
-	cbreak( );
-	noecho( );
+	setlocale( LC_ALL, "C" );
+	tb_init( );
 }
 
-void curses_fini( void )
+void ui_fini( void )
 {
-	echo( );
-	nocbreak( );
-	endwin( );
+	tb_shutdown( );
 }
 
 int main( int ac, char* av[] )
 {
-	setlocale( LC_ALL, "en_US.UTF-8" );
-	initscr( );
-	cbreak( );
-	noecho( );
+	ui_init( );
 
 	return 0;
 }

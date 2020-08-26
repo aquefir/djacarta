@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/3rdparty/unilib/include",
+                "${workspaceFolder}/3rdparty/jacurseslib/include"
+            ],
+            "defines": [
+                "CFG_LINUX",
+                "CFG_AMD64",
+                "CFG_LILENDIAN"
+            ],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c89",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
