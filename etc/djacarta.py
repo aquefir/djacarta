@@ -404,15 +404,15 @@ def mainloop(s):
 				return 1
 		else:
 			if s.bufcur_y < len(s.buffer) - 1:
-				lhs = s.buffer[:s.bufcur_y]
-				if len(lhs) > 0:
-					lhs[-1] += s.buffer[s.bufcur_y][:s.bufcur_x]
+				if s.bufcur_x < len(s.buffer[s.bufcur_y]):
+					curline = s.buffer[s.bufcur_y]
+					lhs = s.buffer[:s.bufcur_y + 1]
+					lhs[-1] = curline[:s.bufcur_x]
+					rhs = s.buffer[s.bufcur_y:]
+					rhs[0] = curline[s.bufcur_x:]
+					s.buffer = lhs + rhs
 				else:
-					lhs = [s.buffer[s.bufcur_y][:s.bufcur_x]]
-				rhs = s.buffer[s.bufcur_y + 1:]
-				if len(rhs) > 0:
-					rhs.insert(0, s.buffer[s.bufcur_y][s.bufcur_x:])
-				s.buffer = lhs + rhs
+					s.buffer.insert(s.bufcur_y + 1, '')
 			else:
 				s.buffer.append('')
 			s.bufcur_y += 1
@@ -457,7 +457,7 @@ def mainloop(s):
 				if s.bufcur_x == 0:
 					newx = len(s.buffer[s.bufcur_y - 1])
 					line = s.buffer[s.bufcur_y - 1] + s.buffer[s.bufcur_y]
-					lhs = s.buffer[:s.bufcur_y - 1]
+					lhs = s.buffer[:s.bufcur_y]
 					if lhs == []:
 						lhs.append(line)
 					else:
